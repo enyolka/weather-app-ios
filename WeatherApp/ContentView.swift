@@ -8,16 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject var viewModel: WeatherViewModel
+    
     var body: some View {
         VStack {
-            ForEach(0..<8){_ in
-                WeatherRecordView()
+            ForEach(viewModel.records){record in
+                WeatherRecordView(record: record, viewModel: viewModel)
             }.padding()
         }
     }
 }
 
 struct WeatherRecordView: View {
+    
+    var record: WeatherModel.WeatherRecord
+    var viewModel: WeatherViewModel
+    
     var body: some View {
         ZStack{
             RoundedRectangle(cornerRadius: 25.0).stroke()
@@ -25,8 +32,11 @@ struct WeatherRecordView: View {
                 Text("🌤")
                     .font(.largeTitle)
                 VStack{
-                    Text("City")
-                    Text("Temperature: 27°C").font(.caption)
+                    Text(record.cityName)
+                    Text("Temperature: \(record.temperature, specifier: "%.1f")°C").font(.caption)
+                }
+                Text("🔄").onTapGesture {
+                    viewModel.refresh( record: record)
                 }
             }
         }
@@ -37,6 +47,6 @@ struct WeatherRecordView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: WeatherViewModel())
     }
 }
