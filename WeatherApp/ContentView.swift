@@ -29,7 +29,7 @@ struct WeatherRecordView: View {
         ZStack{
             RoundedRectangle(cornerRadius: 25.0).stroke()
             HStack{
-                Text("🌤")
+                Text(viewModel.getWeatherImage(record: record))
                     .font(.largeTitle)
                 VStack{
                     Text(record.cityName)
