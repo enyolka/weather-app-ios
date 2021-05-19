@@ -21,17 +21,8 @@ class WeatherViewModel : ObservableObject {
     }
     
     func getWeatherImage(record: WeatherModel.WeatherRecord) -> String {
-        switch record.weatherState {
-        case "Snow":
-            return "❄️"
-        case "Sleet":
-            return "🌨"
-        case "Hail":
-            return "⛈"
-        case "ThunderStorm":
-            return "🌩"
-        default:
-            return "☀️"
+            let weatherIcons = ["Snow": "❄️", "Sleet": "🌨", "Hail":  "🌨",  "Thunderstorm": "🌩", "Heavy Rain": "🌧", "Light Rain": "🌧", "Showers": "🌦", "Heavy Cloud": "⛅️", "Light Cloud": "🌤", "Clear": "☀️"]
+            
+            return weatherIcons[record.weatherState]!
         }
-    }
 }

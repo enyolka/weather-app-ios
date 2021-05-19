@@ -41,7 +41,7 @@ struct WeatherRecordView: View {
                 Text("🔄").onTapGesture {
                     viewModel.refresh( record: record)
                 }
-                }.frame(minWidth: .infinity)})
+                }})
         }.frame(minWidth: 0,
                 maxWidth: .infinity,
                 idealHeight: 90,
