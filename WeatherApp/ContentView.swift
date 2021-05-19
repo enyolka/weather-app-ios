@@ -2,15 +2,17 @@
 //  ContentView.swift
 //  WeatherApp
 //
-//  Created by Użytkownik Gość on 06/05/2021.
+//  Created by Emilia Mączka on 06/05/2021.
 //
 
 import SwiftUI
 
+// "main" view
 struct ContentView: View {
     
     @ObservedObject var viewModel: WeatherViewModel
     
+    // creates scrolled view of all cities
     var body: some View {
         ScrollView(.vertical){
             VStack {
@@ -22,21 +24,32 @@ struct ContentView: View {
     }
 }
 
+// view of each single city
 struct WeatherRecordView: View {
     
     var record: WeatherModel.WeatherRecord
     var viewModel: WeatherViewModel
+    
+    // list of possible parameters
     var params = ["temperature", "humidity", "wind"]
     @State var current = 0
     
+    var cornerRadius : CGFloat = 25.0
+    var iconScale : CGFloat = 0.55
+    var min_width : CGFloat = 0
+    var height: CGFloat = 90
+    
     var body: some View {
         ZStack{
-            RoundedRectangle(cornerRadius: 25.0).stroke()
+            // border for entire object
+            RoundedRectangle(cornerRadius: cornerRadius).stroke()
             GeometryReader(content: { geometry in
                 HStack{
+                // inserts the appropriate icon for the record, sets dimensions
                 Text(viewModel.getWeatherIcon(record: record))
-                    .font(.system(size: 0.55 * geometry.size.height)).padding()
-                    
+                    .font(.system(size: iconScale * geometry.size.height)).padding()
+                
+                // each click increses the counter, its value defines which parameter will be displayed
                 VStack(alignment: .leading){
                     Text(record.cityName)
                     switch params[current % params.count] {
@@ -51,13 +64,15 @@ struct WeatherRecordView: View {
                     current += 1
                 }
                 Spacer()
+                // each tap refreshes value of current parameter
                 Text("🔄").onTapGesture {
                     viewModel.refresh( record: record, currParam: params[current % params.count])
-                }.padding()
+                }.frame(alignment: .trailing).padding()
                 }})
-        }.frame(minWidth: 0,
+        // sets the dimension of object
+        }.frame(minWidth: min_width,
                 maxWidth: .infinity,
-                idealHeight: 90,
+                idealHeight: height,
                 alignment: .leading)
         
     }

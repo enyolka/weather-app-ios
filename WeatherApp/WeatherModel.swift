@@ -2,7 +2,7 @@
 //  WeatherModel.swift
 //  WeatherApp
 //
-//  Created by Użytkownik Gość on 06/05/2021.
+//  Created by Emilia Mączka on 06/05/2021.
 //
 
 import Foundation
@@ -17,6 +17,8 @@ struct WeatherModel {
         }
     }
     
+    // weather record info
+    // weather state is drawn from the list
     struct WeatherRecord: Identifiable {
         var id: UUID = UUID()
         var cityName: String
@@ -27,6 +29,7 @@ struct WeatherModel {
         var windDirection: Float = Float.random(in: 0 ..< 360)
     }
     
+    // selects the appropiate parameter and makes a random change on it
     mutating func refresh(record: WeatherRecord, currParam: String) {
         let index = records.firstIndex{$0.id == record.id}
         switch currParam{

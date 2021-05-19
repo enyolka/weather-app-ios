@@ -2,7 +2,7 @@
 //  WeatherViewModel.swift
 //  WeatherApp
 //
-//  Created by Użytkownik Gość on 06/05/2021.
+//  Created by  Emilia Mączka on 06/05/2021.
 //
 
 import Foundation
@@ -20,6 +20,7 @@ class WeatherViewModel : ObservableObject {
         model.refresh(record: record, currParam: currParam)
     }
     
+    // assigns icons to weather descriptions and returns the appropriate image
     func getWeatherIcon(record: WeatherModel.WeatherRecord) -> String {
             let weatherIcons = ["Snow": "❄️", "Sleet": "🌨", "Hail":  "🌨",  "Thunderstorm": "🌩", "Heavy Rain": "🌧", "Light Rain": "🌧", "Showers": "🌦", "Heavy Cloud": "⛅️", "Light Cloud": "🌤", "Clear": "☀️"]
             
