@@ -32,15 +32,17 @@ struct WeatherRecordView: View {
             RoundedRectangle(cornerRadius: 25.0).stroke()
             GeometryReader(content: { geometry in
                 HStack{
-                Text(viewModel.getWeatherImage(record: record))
+                Text(viewModel.getWeatherIcon(record: record))
                     .font(.system(size: 0.55 * geometry.size.height)).padding()
+                    
                 VStack(alignment: .leading){
                     Text(record.cityName)
                     Text("Temperature: \(record.temperature, specifier: "%.1f")°C").font(.caption)
                 }
+                Spacer()
                 Text("🔄").onTapGesture {
                     viewModel.refresh( record: record)
-                }
+                }.padding()
                 }})
         }.frame(minWidth: 0,
                 maxWidth: .infinity,
