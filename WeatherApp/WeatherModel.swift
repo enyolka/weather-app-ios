@@ -20,7 +20,7 @@ struct WeatherModel {
     struct WeatherRecord: Identifiable {
         var id: UUID = UUID()
         var cityName: String
-        var weatherState: String = "Clear"
+        var weatherState: String = ["Snow", "Sleet", "Hail",  "Thunderstorm", "Heavy Rain", "Light Rain", "Showers", "Heavy Cloud", "Light Cloud", "Clear"].randomElement()!
         var temperature: Float = Float.random(in: -10.0 ... 30.0)
         var humidity: Float = Float.random(in: 0 ... 100)
         var windSpeed: Float = Float.random(in: 0 ... 20)
