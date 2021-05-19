@@ -15,9 +15,9 @@ class WeatherViewModel : ObservableObject {
         model.records
     }
     
-    func refresh(record: WeatherModel.WeatherRecord) {
+    func refresh(record: WeatherModel.WeatherRecord, currParam: String) {
         //objectWillChange.send()
-        model.refresh(record: record)
+        model.refresh(record: record, currParam: currParam)
     }
     
     func getWeatherIcon(record: WeatherModel.WeatherRecord) -> String {

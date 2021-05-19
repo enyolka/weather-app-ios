@@ -26,6 +26,9 @@ struct WeatherRecordView: View {
     
     var record: WeatherModel.WeatherRecord
     var viewModel: WeatherViewModel
+    var params = ["temperature", "humidity", "wind"]
+    @State var current = 0
+    @State var currParam = "temperature"
     
     var body: some View {
         ZStack{
@@ -37,11 +40,22 @@ struct WeatherRecordView: View {
                     
                 VStack(alignment: .leading){
                     Text(record.cityName)
-                    Text("Temperature: \(record.temperature, specifier: "%.1f")°C").font(.caption)
+                    switch currParam {
+                    case "humidity":
+                        Text("Humidity: \(record.humidity, specifier: "%.1f")%").font(.caption)
+                    case "wind":
+                        Text("Wind: \(record.windSpeed, specifier: "%.1f")m/s").font(.caption)                  default:
+                        Text("Temperature: \(record.temperature, specifier: "%.1f")°C").font(.caption)
+                            
+                    }
+                }.onTapGesture{
+                    current += 1
+                    currParam = params[current % 3]
+                
                 }
                 Spacer()
                 Text("🔄").onTapGesture {
-                    viewModel.refresh( record: record)
+                    viewModel.refresh( record: record, currParam: currParam)
                 }.padding()
                 }})
         }.frame(minWidth: 0,
