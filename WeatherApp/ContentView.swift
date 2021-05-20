@@ -11,11 +11,14 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject var viewModel: WeatherViewModel
+    // @State var woeId: String = ""
     
     // creates scrolled view of all cities
     var body: some View {
         ScrollView(.vertical){
             VStack {
+                TextField("Enter WoE ID", text: $viewModel.woeId)
+                Text(viewModel.message)
                 ForEach(viewModel.records){record in
                     WeatherRecordView(record: record, viewModel: viewModel)
                 }.padding(.top, 4)

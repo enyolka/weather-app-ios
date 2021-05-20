@@ -6,8 +6,20 @@
 //
 
 import Foundation
+import Combine
 
 class WeatherViewModel : ObservableObject {
+    
+    @Published var woeId: String = ""
+    @Published var message: String = "(user message)"
+    
+    private var cancellables: Set<AnyCancellable> = []
+    
+    init() {
+        $woeId
+            .assign(to: \.message, on: self)
+            .store(in: &cancellables)
+    }
     
     @Published private(set) var model: WeatherModel = WeatherModel(cities: ["Cracow", "Paris", "London", "Warsaw", "Prague", "New York", "Los Angeles"])
     
