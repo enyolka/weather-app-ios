@@ -14,10 +14,24 @@ class WeatherViewModel : ObservableObject {
     @Published var message: String = "(user message)"
     
     private var cancellables: Set<AnyCancellable> = []
+    private let fetcher: WeatherApiFetcher
+    
+    func fetchWeather(forId woeId: String) {
+        fetcher.forecast(forId: woeId)
+            .sink(receiveCompletion: { completion in
+                print(completion)
+            }, receiveValue: { value in
+                print(value)
+            })
+            .store(in: &cancellables)
+    }
     
     init() {
+        fetcher = WeatherApiFetcher()
+        
         $woeId
-            .assign(to: \.message, on: self)
+            .debounce(for: 0.5, scheduler: RunLoop.main)
+            .sink(receiveValue: fetchWeather(forId:))
             .store(in: &cancellables)
     }
     

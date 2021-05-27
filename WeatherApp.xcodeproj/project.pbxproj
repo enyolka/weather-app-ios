@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC19BAFB265F8ECC00030692 /* WeatherApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC19BAFA265F8ECC00030692 /* WeatherApiResponse.swift */; };
+		AC19BB00265F90A400030692 /* WeatherApiFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC19BAFF265F90A400030692 /* WeatherApiFetcher.swift */; };
 		AC3AFA052643D5D100A20B61 /* WeatherAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AFA042643D5D100A20B61 /* WeatherAppApp.swift */; };
 		AC3AFA072643D5D100A20B61 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AFA062643D5D100A20B61 /* ContentView.swift */; };
 		AC3AFA092643D5D400A20B61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC3AFA082643D5D400A20B61 /* Assets.xcassets */; };
@@ -15,7 +17,6 @@
 		AC3AFA222643D5D500A20B61 /* WeatherAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AFA212643D5D500A20B61 /* WeatherAppUITests.swift */; };
 		AC3AFA332643DBD900A20B61 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AFA322643DBD900A20B61 /* WeatherModel.swift */; };
 		AC3AFA382643DCFB00A20B61 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AFA372643DCFB00A20B61 /* WeatherViewModel.swift */; };
-		ACB71B9926565747006EE96B /* SimpleMeatWeatherClientApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB71B9826565747006EE96B /* SimpleMeatWeatherClientApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC19BAFA265F8ECC00030692 /* WeatherApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApiResponse.swift; sourceTree = "<group>"; };
+		AC19BAFF265F90A400030692 /* WeatherApiFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApiFetcher.swift; sourceTree = "<group>"; };
 		AC3AFA012643D5D100A20B61 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC3AFA042643D5D100A20B61 /* WeatherAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppApp.swift; sourceTree = "<group>"; };
 		AC3AFA062643D5D100A20B61 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -50,7 +53,6 @@
 		AC3AFA232643D5D500A20B61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC3AFA322643DBD900A20B61 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		AC3AFA372643DCFB00A20B61 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
-		ACB71B9826565747006EE96B /* SimpleMeatWeatherClientApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMeatWeatherClientApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +103,9 @@
 		AC3AFA032643D5D100A20B61 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				ACB71B9826565747006EE96B /* SimpleMeatWeatherClientApp.swift */,
 				AC3AFA042643D5D100A20B61 /* WeatherAppApp.swift */,
+				AC19BAFA265F8ECC00030692 /* WeatherApiResponse.swift */,
+				AC19BAFF265F90A400030692 /* WeatherApiFetcher.swift */,
 				AC3AFA062643D5D100A20B61 /* ContentView.swift */,
 				AC3AFA322643DBD900A20B61 /* WeatherModel.swift */,
 				AC3AFA372643DCFB00A20B61 /* WeatherViewModel.swift */,
@@ -268,11 +271,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC19BAFB265F8ECC00030692 /* WeatherApiResponse.swift in Sources */,
 				AC3AFA072643D5D100A20B61 /* ContentView.swift in Sources */,
 				AC3AFA382643DCFB00A20B61 /* WeatherViewModel.swift in Sources */,
 				AC3AFA332643DBD900A20B61 /* WeatherModel.swift in Sources */,
 				AC3AFA052643D5D100A20B61 /* WeatherAppApp.swift in Sources */,
-				ACB71B9926565747006EE96B /* SimpleMeatWeatherClientApp.swift in Sources */,
+				AC19BB00265F90A400030692 /* WeatherApiFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
