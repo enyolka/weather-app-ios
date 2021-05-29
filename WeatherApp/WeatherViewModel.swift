@@ -48,8 +48,12 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print(locations)
         currentLocation = locations.last
+        let geocoder = CLGeocoder()
+        if let location = currentLocation {
+            geocoder.reverseGeocodeLocation(location) { placemarks, error in
+                print(placemarks ?? "ups")
+        }
     }
     
     func fetchWeather(forId woeId: Int) {
