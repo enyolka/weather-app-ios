@@ -31,16 +31,22 @@ struct WeatherModel {
     }
     
     // selects the appropiate parameter and makes a random change on it
-    mutating func refresh(record: WeatherRecord, currParam: String, value: WeatherApiResponse) {
+    mutating func refresh(record: WeatherRecord, currParam: String, data: WeatherApiResponse) {
         let index = records.firstIndex{$0.id == record.id}
-        switch currParam{
+        
+        records[index!].weatherState = data.consolidatedWeather.first?.weatherStateName ?? "Clear";
+        records[index!].temperature = Float(data.consolidatedWeather.first?.theTemp ?? 0) + Float.random(in: 0...3);
+        records[index!].humidity = Float(data.consolidatedWeather.first?.humidity ?? 0);
+        records[index!].windSpeed = Float(data.consolidatedWeather.first?.windSpeed ?? 0);
+        records[index!].windDirection = Float(data.consolidatedWeather.first?.windDirection ?? 0);
+        /*switch currParam{
         case "humidity":
-            records[index!].humidity = value.consolidatedWeather.first?.humidity ?? 0.0
+            records[index!].humidity = Float(value.consolidatedWeather.first?.theTemp ?? 0.0)
         case "wind":
-            records[index!].windSpeed = value.consolidatedWeather.first?.windSpeed ?? 0
+            records[index!].windSpeed = Float(value.consolidatedWeather.first?.theTemp ?? 0.0)
         default:
             records[index!].temperature = Float(value.consolidatedWeather.first?.theTemp ?? 0.0)
-        }
+        }*/
         print("Refreshig record: \(record)")
     }
     

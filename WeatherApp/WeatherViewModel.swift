@@ -65,7 +65,7 @@ class WeatherViewModel : ObservableObject {
             .sink(receiveCompletion: { completion in
                 print(completion)
             }, receiveValue: { value in
-                self.model.refresh(record: record, currParam: currParam, value: value)
+                self.model.refresh(record: record, currParam: currParam, data: value)
             })
             .store(in: &cancellables)
     }
