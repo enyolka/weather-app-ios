@@ -6,6 +6,12 @@
 //
 
 import SwiftUI
+import MapKit
+
+struct Place: Identifiable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
+}
 
 // "main" view
 struct ContentView: View {
@@ -13,12 +19,22 @@ struct ContentView: View {
     @ObservedObject var viewModel: WeatherViewModel
     // @State var woeId: String = ""
     
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 50.0, longitude: 20.0), span: MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0))
+    @State private var trackingMode = MapUserTrackingMode.none
+    
+    @State private var places: [Place] = [
+        Place(coordinate: .init(latitude: 50.064528, longitude: 19.923556))
+    ]
+    
     // creates scrolled view of all cities
     var body: some View {
         ScrollView(.vertical){
             VStack {
                 //TextField("Enter WoE ID", text: $viewModel.woeId)
                 //Text(viewModel.message)
+                Map(coordinateRegion: $region, annotationItems: places) { place in
+                    MapPin(coordinate: place.coordinate)
+                }
                 ForEach(viewModel.records){record in
                     WeatherRecordView(record: record, viewModel: viewModel)
                 }.padding(.top, 4)
