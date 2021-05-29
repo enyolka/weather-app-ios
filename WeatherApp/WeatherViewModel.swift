@@ -53,6 +53,7 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
         if let location = currentLocation {
             geocoder.reverseGeocodeLocation(location) { placemarks, error in
                 print(placemarks ?? "ups")
+            }
         }
     }
     
