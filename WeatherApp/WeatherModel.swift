@@ -10,9 +10,9 @@ import Foundation
 struct WeatherModel {
     var records: Array<WeatherRecord> = []
     
-    init(cities: Array<String>) {
+    init() {
         records = Array<WeatherRecord>()
-        /*for city in cities {
+        /*8for city in cities {
             records.append(WeatherRecord(cityName: city))
         }*/
     }
@@ -31,15 +31,15 @@ struct WeatherModel {
     }
     
     // selects the appropiate parameter and makes a random change on it
-    mutating func refresh(record: WeatherRecord, currParam: String) {
+    mutating func refresh(record: WeatherRecord, currParam: String, value: WeatherApiResponse) {
         let index = records.firstIndex{$0.id == record.id}
         switch currParam{
         case "humidity":
-            records[index!].humidity = Float.random(in: 0 ... 100)
+            records[index!].humidity = value.consolidatedWeather.first?.humidity ?? 0.0
         case "wind":
-            records[index!].windSpeed = Float.random(in: 0 ... 20)
+            records[index!].windSpeed = value.consolidatedWeather.first?.windSpeed ?? 0
         default:
-        records[index!].temperature = Float.random(in: -10.0 ... 30.0)
+            records[index!].temperature = Float(value.consolidatedWeather.first?.theTemp ?? 0.0)
         }
         print("Refreshig record: \(record)")
     }
