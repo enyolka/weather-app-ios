@@ -7,8 +7,9 @@
 
 import Foundation
 import Combine
+import CoreLocation
 
-class WeatherViewModel : ObservableObject {
+class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
     
     private var citiesList = ["Barcelona", "Paris", "London", "Warsaw", "Prague", "Rome", "Washington"]
     @Published var woeId: Int = 0
@@ -18,13 +19,20 @@ class WeatherViewModel : ObservableObject {
     private let fetcher: WeatherApiFetcher
     private let fetcherCity: CityApiFetcher
     
+    private let locationManager: CLLocationManager
+    @Published var currentLocation: CLLocation?
+    
     @Published private(set) var model: WeatherModel = WeatherModel()
-    
-
-    
-    init() {
+   
+    override init() {
         fetcher = WeatherApiFetcher()
         fetcherCity = CityApiFetcher()
+        locationManager = CLLocationManager()
+        super.init()
+        
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
         
         citiesList.forEach{fetchCity(forName: $0)}
         
@@ -37,6 +45,11 @@ class WeatherViewModel : ObservableObject {
 
     var records: Array<WeatherModel.WeatherRecord> {
         model.records
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(locations)
+        currentLocation = locations.last
     }
     
     func fetchWeather(forId woeId: Int) {

@@ -35,6 +35,7 @@ struct ContentView: View {
                 Map(coordinateRegion: $region, annotationItems: places) { place in
                     MapPin(coordinate: place.coordinate)
                 }
+                Text(String(viewModel.currentLocation?.coordinate.latitude ?? 0))
                 ForEach(viewModel.records){record in
                     WeatherRecordView(record: record, viewModel: viewModel)
                 }.padding(.top, 4)
