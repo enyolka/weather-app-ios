@@ -12,15 +12,16 @@ struct WeatherModel {
     
     init(cities: Array<String>) {
         records = Array<WeatherRecord>()
-        for city in cities {
+        /*for city in cities {
             records.append(WeatherRecord(cityName: city))
-        }
+        }*/
     }
     
     // weather record info
     // weather state is drawn from the list
     struct WeatherRecord: Identifiable {
         var id: UUID = UUID()
+        var woeId: Int = [44418, 615702, 523920].randomElement()!
         var cityName: String
         var weatherState: String = ["Snow", "Sleet", "Hail",  "Thunderstorm", "Heavy Rain", "Light Rain", "Showers", "Heavy Cloud", "Light Cloud", "Clear"].randomElement()!
         var temperature: Float = Float.random(in: -10.0 ... 30.0)
@@ -41,5 +42,18 @@ struct WeatherModel {
         records[index!].temperature = Float.random(in: -10.0 ... 30.0)
         }
         print("Refreshig record: \(record)")
+    }
+    
+    mutating func addRecord(data: WeatherApiResponse) {
+        records.append(WeatherRecord(
+                        woeId: data.woeid,
+                        cityName: data.title,
+            weatherState: data.consolidatedWeather.first?.weatherStateName ?? "Clear",
+            temperature: Float(data.consolidatedWeather.first?.theTemp ?? 0),
+            humidity: Float(data.consolidatedWeather.first?.humidity ?? 0),
+            windSpeed: Float(data.consolidatedWeather.first?.windSpeed ?? 0),
+            windDirection: Float(data.consolidatedWeather.first?.windDirection ?? 0)
+            ))
+        
     }
 }

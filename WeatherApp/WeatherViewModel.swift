@@ -10,36 +10,52 @@ import Combine
 
 class WeatherViewModel : ObservableObject {
     
-    @Published var woeId: String = ""
+    @Published var woeId: Int = 0
     @Published var message: String = "(user message)"
     
     private var cancellables: Set<AnyCancellable> = []
     private let fetcher: WeatherApiFetcher
+    private let fetcherCity: CityApiFetcher
     
-    func fetchWeather(forId woeId: String) {
+    @Published private(set) var model: WeatherModel = WeatherModel(cities: ["Cracow", "Paris", "London", "Warsaw", "Prague", "New York", "Los Angeles"])
+    
+    func fetchWeather(forId woeId: Int) {
         fetcher.forecast(forId: woeId)
             .sink(receiveCompletion: { completion in
                 print(completion)
             }, receiveValue: { value in
-                print(value)
+                self.model.addRecord(data: value)
+            })
+            .store(in: &cancellables)
+    }
+    
+    func fetchCity(forName cityName: String) {
+        fetcherCity.forecast(forName: cityName)
+            .sink(receiveCompletion: { completion in
+                print(completion)
+            }, receiveValue: { value in
+                self.fetchWeather(forId: value[0].woeid)
             })
             .store(in: &cancellables)
     }
     
     init() {
         fetcher = WeatherApiFetcher()
+        fetcherCity = CityApiFetcher()
         
-        $woeId
+        ["Cracow", "Paris", "London", "Warsaw", "Prague", "New York", "Los Angeles"].forEach{fetchCity(forName: $0)}
+        
+       /* $woeId
             .debounce(for: 0.5, scheduler: RunLoop.main)
             .sink(receiveValue: fetchWeather(forId:))
-            .store(in: &cancellables)
+            .store(in: &cancellables)*/
     }
     
-    @Published private(set) var model: WeatherModel = WeatherModel(cities: ["Cracow", "Paris", "London", "Warsaw", "Prague", "New York", "Los Angeles"])
     
     var records: Array<WeatherModel.WeatherRecord> {
         model.records
     }
+    
     
     func refresh(record: WeatherModel.WeatherRecord, currParam: String) {
         //objectWillChange.send()

@@ -17,6 +17,8 @@
 		AC3AFA222643D5D500A20B61 /* WeatherAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AFA212643D5D500A20B61 /* WeatherAppUITests.swift */; };
 		AC3AFA332643DBD900A20B61 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AFA322643DBD900A20B61 /* WeatherModel.swift */; };
 		AC3AFA382643DCFB00A20B61 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AFA372643DCFB00A20B61 /* WeatherViewModel.swift */; };
+		AC70DDED2662A21600DF4D8D /* CityApiFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC70DDEC2662A21600DF4D8D /* CityApiFetcher.swift */; };
+		AC70DDF22662A2B400DF4D8D /* CityApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC70DDF12662A2B400DF4D8D /* CityApiResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		AC3AFA232643D5D500A20B61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC3AFA322643DBD900A20B61 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		AC3AFA372643DCFB00A20B61 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		AC70DDEC2662A21600DF4D8D /* CityApiFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityApiFetcher.swift; sourceTree = "<group>"; };
+		AC70DDF12662A2B400DF4D8D /* CityApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityApiResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				AC3AFA042643D5D100A20B61 /* WeatherAppApp.swift */,
 				AC19BAFA265F8ECC00030692 /* WeatherApiResponse.swift */,
 				AC19BAFF265F90A400030692 /* WeatherApiFetcher.swift */,
+				AC70DDEC2662A21600DF4D8D /* CityApiFetcher.swift */,
+				AC70DDF12662A2B400DF4D8D /* CityApiResponse.swift */,
 				AC3AFA062643D5D100A20B61 /* ContentView.swift */,
 				AC3AFA322643DBD900A20B61 /* WeatherModel.swift */,
 				AC3AFA372643DCFB00A20B61 /* WeatherViewModel.swift */,
@@ -273,7 +279,9 @@
 			files = (
 				AC19BAFB265F8ECC00030692 /* WeatherApiResponse.swift in Sources */,
 				AC3AFA072643D5D100A20B61 /* ContentView.swift in Sources */,
+				AC70DDF22662A2B400DF4D8D /* CityApiResponse.swift in Sources */,
 				AC3AFA382643DCFB00A20B61 /* WeatherViewModel.swift in Sources */,
+				AC70DDED2662A21600DF4D8D /* CityApiFetcher.swift in Sources */,
 				AC3AFA332643DBD900A20B61 /* WeatherModel.swift in Sources */,
 				AC3AFA052643D5D100A20B61 /* WeatherAppApp.swift in Sources */,
 				AC19BB00265F90A400030692 /* WeatherApiFetcher.swift in Sources */,
