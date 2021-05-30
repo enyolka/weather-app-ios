@@ -13,7 +13,7 @@ struct WeatherModel {
     
     init() {
         records = Array<WeatherRecord>()
-        /*8for city in cities {
+        /*for city in cities {
             records.append(WeatherRecord(cityName: city))
         }*/
     }

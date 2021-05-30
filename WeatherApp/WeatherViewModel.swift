@@ -18,6 +18,7 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
     
     private var cancellables: Set<AnyCancellable> = []
     private let fetcher: WeatherApiFetcher
+    private let fetcherLattLong: LattLongApiFetcher
     private let fetcherCity: CityApiFetcher
     
     private let locationManager: CLLocationManager
@@ -27,6 +28,7 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
    
     override init() {
         fetcher = WeatherApiFetcher()
+        fetcherLattLong = LattLongApiFetcher()
         fetcherCity = CityApiFetcher()
         locationManager = CLLocationManager()
         super.init()
@@ -43,12 +45,11 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
             .store(in: &cancellables)*/
     }
 
-
     var records: Array<WeatherModel.WeatherRecord> {
         model.records
     }
 
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last
         let geocoder = CLGeocoder()
@@ -61,13 +62,19 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
                 else {
                     return
                 }
-                print(lat, lon)
+                self.fetchLattLong(lat: lat, lon: lon)
             }
         }
     }
     
-    func addRecordFromCurrentLocation(){
-        
+    func fetchLattLong(lat: Double, lon: Double){
+        fetcherLattLong.forecast(forLat: lat, forLong: lon)
+            .sink(receiveCompletion: { completion in
+                print(completion)
+            }, receiveValue: { value in
+                self.fetchWeather(forId: value[0].woeid)
+            })
+            .store(in: &cancellables)
     }
     
     func fetchWeather(forId woeId: Int) {

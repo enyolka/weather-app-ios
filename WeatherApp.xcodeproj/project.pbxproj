@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC01C28C26644F7D00FD5167 /* LattLongApiFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC01C28B26644F7D00FD5167 /* LattLongApiFetcher.swift */; };
 		AC19BAFB265F8ECC00030692 /* WeatherApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC19BAFA265F8ECC00030692 /* WeatherApiResponse.swift */; };
 		AC19BB00265F90A400030692 /* WeatherApiFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC19BAFF265F90A400030692 /* WeatherApiFetcher.swift */; };
 		AC3AFA052643D5D100A20B61 /* WeatherAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3AFA042643D5D100A20B61 /* WeatherAppApp.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AC01C28B26644F7D00FD5167 /* LattLongApiFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LattLongApiFetcher.swift; sourceTree = "<group>"; };
 		AC19BAFA265F8ECC00030692 /* WeatherApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApiResponse.swift; sourceTree = "<group>"; };
 		AC19BAFF265F90A400030692 /* WeatherApiFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApiFetcher.swift; sourceTree = "<group>"; };
 		AC3AFA012643D5D100A20B61 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +113,7 @@
 				AC19BAFA265F8ECC00030692 /* WeatherApiResponse.swift */,
 				AC19BAFF265F90A400030692 /* WeatherApiFetcher.swift */,
 				AC70DDEC2662A21600DF4D8D /* CityApiFetcher.swift */,
+				AC01C28B26644F7D00FD5167 /* LattLongApiFetcher.swift */,
 				AC70DDF12662A2B400DF4D8D /* CityApiResponse.swift */,
 				AC3AFA062643D5D100A20B61 /* ContentView.swift */,
 				AC3AFA322643DBD900A20B61 /* WeatherModel.swift */,
@@ -284,6 +287,7 @@
 				AC70DDED2662A21600DF4D8D /* CityApiFetcher.swift in Sources */,
 				AC3AFA332643DBD900A20B61 /* WeatherModel.swift in Sources */,
 				AC3AFA052643D5D100A20B61 /* WeatherAppApp.swift in Sources */,
+				AC01C28C26644F7D00FD5167 /* LattLongApiFetcher.swift in Sources */,
 				AC19BB00265F90A400030692 /* WeatherApiFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
