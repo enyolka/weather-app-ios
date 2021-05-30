@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import CoreLocation
+import MapKit
 
 class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
     
@@ -102,8 +103,12 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
     
     // assigns icons to weather descriptions and returns the appropriate image
     func getWeatherIcon(record: WeatherModel.WeatherRecord) -> String {
-            let weatherIcons = ["Snow": "❄️", "Sleet": "🌨", "Hail":  "🌨",  "Thunderstorm": "🌩", "Heavy Rain": "🌧", "Light Rain": "🌧", "Showers": "🌦", "Heavy Cloud": "⛅️", "Light Cloud": "🌤", "Clear": "☀️"]
+        let weatherIcons = ["Snow": "❄️", "Sleet": "🌨", "Hail":  "🌨",  "Thunderstorm": "🌩", "Heavy Rain": "🌧", "Light Rain": "🌧", "Showers": "🌦", "Heavy Cloud": "⛅️", "Light Cloud": "🌤", "Clear": "☀️"]
             
-            return weatherIcons[record.weatherState]!
-        }
+        return weatherIcons[record.weatherState]!
+    }
+    
+    func getRegion(record: WeatherModel.WeatherRecord) -> MKCoordinateRegion {
+        return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: record.latitude, longitude: record.longitude), span: MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0))
+    }
 }

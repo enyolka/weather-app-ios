@@ -48,8 +48,7 @@ struct WeatherRecordView: View {
     var min_width : CGFloat = 0
     var height: CGFloat = 90
     
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: /*viewModel.currentLocation?.coordinate.latitude ?? 0*/30.0, longitude:20.0), span: MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0))
-    
+    @State private var region = 0
     @State private var showModal = false
     
     var body: some View {
@@ -83,7 +82,7 @@ struct WeatherRecordView: View {
                             showModal = true
                         }
                         .sheet(isPresented: $showModal) {
-                            ModalView(region:  region)
+                            ModalView(region: viewModel.getRegion(record: record))
                         }
                         Text("🔄").onTapGesture {
                             viewModel.refresh( record: record, currParam: params[current % params.count])
@@ -103,10 +102,10 @@ struct WeatherRecordView: View {
 
 struct ModalView: View {
     @Environment(\.presentationMode) var presentationMode
-    
+
     var region: MKCoordinateRegion
-    @State private var trackingMode = MapUserTrackingMode.none
     
+    @State private var trackingMode = MapUserTrackingMode.none
     @State private var places: [Place] = [
         Place(coordinate: .init(latitude: 50.064528, longitude: 19.923556))
     ]
