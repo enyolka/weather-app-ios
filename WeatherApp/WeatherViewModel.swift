@@ -12,7 +12,7 @@ import MapKit
 
 class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
     
-    private var citiesList = ["Barcelona", "Paris", "London", "Warsaw", "Prague", "Rome", "Washington"]
+    private var citiesList = ["Barcelona", "Paris", "London", "Moscow", "Prague", "Rome", "Washington"]
     @Published var woeId: Int = 0
     @Published var message: String = "(user message)"
     
