@@ -18,9 +18,6 @@ struct ContentView: View {
     
     @ObservedObject var viewModel: WeatherViewModel
     // @State var woeId: String = ""
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: /*viewModel.currentLocation?.coordinate.latitude ?? 0*/30.0, longitude:20.0), span: MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0))
-    
-    @State private var showModal = false
     
     // creates scrolled view of all cities
     var body: some View {
@@ -28,12 +25,6 @@ struct ContentView: View {
             VStack {
                 //TextField("Enter WoE ID", text: $viewModel.woeId)
                 //Text(viewModel.message)
-                Button("Map") {
-                    showModal = true
-                }
-                .sheet(isPresented: $showModal) {
-                    ModalView(region:  region)
-                }
                 ForEach(viewModel.records){record in
                     WeatherRecordView(record: record, viewModel: viewModel)
                 }.padding(.top, 4)
@@ -56,6 +47,10 @@ struct WeatherRecordView: View {
     var iconScale : CGFloat = 0.55
     var min_width : CGFloat = 0
     var height: CGFloat = 90
+    
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: /*viewModel.currentLocation?.coordinate.latitude ?? 0*/30.0, longitude:20.0), span: MKCoordinateSpan(latitudeDelta: 1.0, longitudeDelta: 1.0))
+    
+    @State private var showModal = false
     
     var body: some View {
         ZStack{
@@ -83,9 +78,18 @@ struct WeatherRecordView: View {
                 }
                 Spacer()
                 // each tap refreshes value of current parameter
-                Text("🔄").onTapGesture {
-                    viewModel.refresh( record: record, currParam: params[current % params.count])
-                }.frame(alignment: .trailing).padding()
+                    VStack(){
+                        Button("Map") {
+                            showModal = true
+                        }
+                        .sheet(isPresented: $showModal) {
+                            ModalView(region:  region)
+                        }
+                        Text("🔄").onTapGesture {
+                            viewModel.refresh( record: record, currParam: params[current % params.count])
+                        }.padding(.top, 3.0)
+                    }
+                .frame(alignment: .trailing).padding()
                 }})
         // sets the dimension of object
         }.frame(minWidth: min_width,
@@ -108,12 +112,14 @@ struct ModalView: View {
     ]
         
     var body: some View {
-        Map(coordinateRegion: .constant(region), annotationItems: places) { place in
-            MapPin(coordinate: place.coordinate)
-        }.padding()
-        Button("Cancel") {
-            presentationMode.wrappedValue.dismiss()
-        }.padding()
+        VStack(){
+            Map(coordinateRegion: .constant(region), annotationItems: places) { place in
+                MapPin(coordinate: place.coordinate)
+            }.padding()
+            Button("Cancel") {
+                presentationMode.wrappedValue.dismiss()
+            }.padding()
+        }
     }
 }
 
