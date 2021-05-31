@@ -58,31 +58,36 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
                 guard
                     let placemarks = placemarks,
                     let lat = placemarks.first?.location?.coordinate.latitude,
-                    let lon = placemarks.first?.location?.coordinate.longitude
+                    let lon = placemarks.first?.location?.coordinate.longitude,
+                    let locality = placemarks.first?.locality
                 else {
                     return
                 }
-                self.fetchLattLong(lat: lat, lon: lon)
+                self.fetchLattLong(lat: lat, lon: lon, locality: locality)
             }
         }
     }
     
-    func fetchLattLong(lat: Double, lon: Double){
+    func fetchLattLong(lat: Double, lon: Double, locality: String){
         fetcherLattLong.forecast(forLat: lat, forLong: lon)
             .sink(receiveCompletion: { completion in
                 print(completion)
             }, receiveValue: { value in
-                self.fetchWeather(forId: value[0].woeid)
+                self.fetchWeather(forId: value[0].woeid, locality: locality)
             })
             .store(in: &cancellables)
     }
     
-    func fetchWeather(forId woeId: Int) {
+    func fetchWeather(forId woeId: Int, locality: String? = nil) {
         fetcher.forecast(forId: woeId)
             .sink(receiveCompletion: { completion in
                 print(completion)
             }, receiveValue: { value in
-                self.model.addRecord(data: value)
+                if (locality != nil) {
+                    self.model.addRecord(data: value, idx: 0, locality: locality)
+                } else {
+                    self.model.addRecord(data: value, idx: 1)
+                }
             })
             .store(in: &cancellables)
     }
@@ -97,9 +102,9 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
             .store(in: &cancellables)
     }
     
-    func refresh(record: WeatherModel.WeatherRecord, currParam: String) {
+    func refresh(record: WeatherModel.WeatherRecord, woeId: Int, currParam: String) {
         //objectWillChange.send()
-        fetcher.forecast(forId: record.woeId)
+        fetcher.forecast(forId: woeId)
             .sink(receiveCompletion: { completion in
                 print(completion)
             }, receiveValue: { value in

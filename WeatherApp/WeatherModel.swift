@@ -13,9 +13,6 @@ struct WeatherModel {
     
     init() {
         records = Array<WeatherRecord>()
-        /*for city in cities {
-            records.append(WeatherRecord(cityName: city))
-        }*/
     }
     
     // weather record info
@@ -36,28 +33,26 @@ struct WeatherModel {
     // selects the appropiate parameter and makes a random change on it
     mutating func refresh(record: WeatherRecord, currParam: String, data: WeatherApiResponse) {
         let index = records.firstIndex{$0.id == record.id}
+        let arr = data.lattLong.components(separatedBy: ",")
         
+        records[index!].woeId = data.woeid;
+        records[index!].cityName = data.title;
+        records[index!].latitude = CLLocationDegrees(arr[0]) ?? 0;
+        records[index!].longitude = CLLocationDegrees(arr[1]) ?? 0;
         records[index!].weatherState = data.consolidatedWeather.first?.weatherStateName ?? "Clear";
         records[index!].temperature = Float(data.consolidatedWeather.first?.theTemp ?? 0) + Float.random(in: 0...3);
         records[index!].humidity = Float(data.consolidatedWeather.first?.humidity ?? 0);
         records[index!].windSpeed = Float(data.consolidatedWeather.first?.windSpeed ?? 0);
         records[index!].windDirection = Float(data.consolidatedWeather.first?.windDirection ?? 0);
-        /*switch currParam{
-        case "humidity":
-            records[index!].humidity = Float(value.consolidatedWeather.first?.theTemp ?? 0.0)
-        case "wind":
-            records[index!].windSpeed = Float(value.consolidatedWeather.first?.theTemp ?? 0.0)
-        default:
-            records[index!].temperature = Float(value.consolidatedWeather.first?.theTemp ?? 0.0)
-        }*/
-        print("Refreshig record: \(record)")
     }
     
-    mutating func addRecord(data: WeatherApiResponse) {
+    mutating func addRecord(data: WeatherApiResponse, idx: Int, locality: String? = "") {
         let arr = data.lattLong.components(separatedBy: ",")
-        records.append(WeatherRecord(
+        let cityNameLocality = locality == "" ? data.title : data.title + " (\(locality ?? ""))"
+        let i = idx == 1 ? self.records.endIndex : 0
+        records.insert(WeatherRecord(
                         woeId: data.woeid,
-                        cityName: data.title,
+                        cityName: cityNameLocality,
             latitude: CLLocationDegrees(arr[0]) ?? 0,
             longitude: CLLocationDegrees(arr[1]) ?? 0,
             weatherState: data.consolidatedWeather.first?.weatherStateName ?? "Clear",
@@ -65,7 +60,7 @@ struct WeatherModel {
             humidity: Float(data.consolidatedWeather.first?.humidity ?? 0),
             windSpeed: Float(data.consolidatedWeather.first?.windSpeed ?? 0),
             windDirection: Float(data.consolidatedWeather.first?.windDirection ?? 0)
-            ))
+        ), at: i)
         
     }
 }

@@ -85,7 +85,7 @@ struct WeatherRecordView: View {
                             ModalView(region: viewModel.getRegion(record: record))
                         }
                         Text("🔄").onTapGesture {
-                            viewModel.refresh( record: record, currParam: params[current % params.count])
+                            viewModel.refresh( record: record, woeId: record.woeId, currParam: params[current % params.count])
                         }.padding(.top, 3.0)
                     }
                 .frame(alignment: .trailing).padding()
