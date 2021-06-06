@@ -14,8 +14,6 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
     
 	// fixed list of cities
     private var citiesList = ["Barcelona", "Paris", "London", "Moscow", "Prague", "Rome", "Washington"]
-    @Published var woeId: Int = 0
-    @Published var message: String = "(user message)"
     
     private var cancellables: Set<AnyCancellable> = []
     private let fetcher: WeatherApiFetcher
@@ -110,7 +108,7 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
             .store(in: &cancellables)
     }
     
-	// refresh record 
+	// refresh selected record
     func refresh(record: WeatherModel.WeatherRecord, woeId: Int) {
         fetcher.forecast(forId: woeId)
             .sink(receiveCompletion: { completion in
