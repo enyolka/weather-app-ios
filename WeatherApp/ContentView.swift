@@ -61,7 +61,7 @@ struct WeatherRecordView: View {
                 
                 // each click increses the counter, its value defines which parameter will be displayed
                 VStack(alignment: .leading){
-                    Text(record.cityName)
+                    Text(record.locality == "" ? record.cityName : ((record.locality) + " (\(record.cityName))"))
                     switch params[current % params.count] {
                     case "humidity":
                         Text("Humidity: \(record.humidity, specifier: "%.1f")%").font(.caption)

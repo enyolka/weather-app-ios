@@ -11,17 +11,19 @@ import MapKit
 struct WeatherModel {
     var records: Array<WeatherRecord> = []
     
+    // creates record for current location
     init() {
         records = Array<WeatherRecord>()
-        records.append(WeatherRecord(cityName:""));
+        records.append(WeatherRecord(cityName:"Neverland"));
     }
     
     // weather record info
-    // weather state is drawn from the list
+    // default random values
     struct WeatherRecord: Identifiable {
         var id: UUID = UUID()
         var woeId: Int = [44418, 615702, 523920].randomElement()!
         var cityName: String
+        var locality: String =  ""
         var latitude: CLLocationDegrees = CLLocationDegrees(Float.random(in: -180...180))
         var longitude: CLLocationDegrees = CLLocationDegrees(Float.random(in: -180...180))
         var weatherState: String = ["Snow", "Sleet", "Hail",  "Thunderstorm", "Heavy Rain", "Light Rain", "Showers", "Heavy Cloud", "Light Cloud", "Clear"].randomElement()!
@@ -35,10 +37,10 @@ struct WeatherModel {
     mutating func refresh(record: WeatherRecord, data: WeatherApiResponse, locality: String? = "") {
         let index = records.firstIndex{$0.id == record.id}
         let arr = data.lattLong.components(separatedBy: ",")
-        let cityNameLocality = locality == "" ? data.title : ((locality ?? "") + " (\(data.title))")
         
         records[index!].woeId = data.woeid;
-        records[index!].cityName = cityNameLocality;
+        records[index!].cityName = data.title;
+        records[index!].locality = locality ?? ""
         records[index!].latitude = CLLocationDegrees(arr[0]) ?? 0;
         records[index!].longitude = CLLocationDegrees(arr[1]) ?? 0;
         records[index!].weatherState = data.consolidatedWeather.first?.weatherStateName ?? "Clear";
@@ -48,14 +50,13 @@ struct WeatherModel {
         records[index!].windDirection = Float(data.consolidatedWeather.first?.windDirection ?? 0);
     }
     
-    mutating func addRecord(data: WeatherApiResponse, idx: Int, locality: String? = "") {
+    // add new record to the list
+    mutating func addRecord(data: WeatherApiResponse) {
         let arr = data.lattLong.components(separatedBy: ",")
-        let cityNameLocality = locality == "" ? data.title : ((locality ?? "") + " (\(data.title))")
-        let i = idx == 1 ? self.records.endIndex : 0
         
-        records.insert(WeatherRecord(
+        records.append(WeatherRecord(
                         woeId: data.woeid,
-                        cityName: cityNameLocality,
+            cityName: data.title,
             latitude: CLLocationDegrees(arr[0]) ?? 0,
             longitude: CLLocationDegrees(arr[1]) ?? 0,
             weatherState: data.consolidatedWeather.first?.weatherStateName ?? "Clear",
@@ -63,7 +64,7 @@ struct WeatherModel {
             humidity: Float(data.consolidatedWeather.first?.humidity ?? 0),
             windSpeed: Float(data.consolidatedWeather.first?.windSpeed ?? 0),
             windDirection: Float(data.consolidatedWeather.first?.windDirection ?? 0)
-        ), at: i)
+        ))
         
     }
 }

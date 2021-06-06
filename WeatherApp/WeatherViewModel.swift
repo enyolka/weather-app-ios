@@ -86,7 +86,7 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
                 if (locality != nil) {
                     self.model.refresh(record: self.records[0], data: value, locality: locality);
                 } else {
-                    self.model.addRecord(data: value, idx: 1);
+                    self.model.addRecord(data: value);
                 }
             })
             .store(in: &cancellables)
@@ -103,7 +103,6 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
     }
     
     func refresh(record: WeatherModel.WeatherRecord, woeId: Int) {
-        //objectWillChange.send()
         fetcher.forecast(forId: woeId)
             .sink(receiveCompletion: { completion in
                 print(completion)
