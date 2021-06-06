@@ -107,7 +107,7 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
             .sink(receiveCompletion: { completion in
                 print(completion)
             }, receiveValue: { value in
-                self.model.refresh(record: record, data: value)
+                self.model.refresh(record: record, data: value, locality: record.locality)
             })
             .store(in: &cancellables)
     }
