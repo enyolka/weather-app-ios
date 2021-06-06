@@ -17,14 +17,11 @@ struct Place: Identifiable {
 struct ContentView: View {
     
     @ObservedObject var viewModel: WeatherViewModel
-    // @State var woeId: String = ""
     
     // creates scrolled view of all cities
     var body: some View {
         ScrollView(.vertical){
             VStack {
-                //TextField("Enter WoE ID", text: $viewModel.woeId)
-                //Text(viewModel.message)
                 ForEach(viewModel.records){record in
                     WeatherRecordView(record: record, viewModel: viewModel)
                 }.padding(.top, 4)
@@ -49,6 +46,7 @@ struct WeatherRecordView: View {
     var height: CGFloat = 90
     
     @State private var region = 0
+    // boolean value responsible for displaying modal
     @State private var showModal = false
     
     var body: some View {
@@ -70,22 +68,22 @@ struct WeatherRecordView: View {
                     case "wind":
                         Text("Wind: \(record.windSpeed, specifier: "%.1f") m/s").font(.caption)                  default:
                         Text("Temperature: \(record.temperature, specifier: "%.1f")°C").font(.caption)
-                            
                     }
                 }.onTapGesture{
                     current += 1
                 }
                 Spacer()
-                // each tap refreshes value of current parameter
                     VStack(){
-                        Button("Map") {
+                        // clicking on the button shows the map
+                        Button("🗺") {
                             showModal = true
                         }
                         .sheet(isPresented: $showModal) {
                             ModalView(region: viewModel.getRegion(record: record))
                         }
+                        // each tap refreshes value of current parameter
                         Text("🔄").onTapGesture {
-                            viewModel.refresh( record: record, woeId: record.woeId, currParam: params[current % params.count])
+                            viewModel.refresh( record: record, woeId: record.woeId)
                         }.padding(.top, 3.0)
                     }
                 .frame(alignment: .trailing).padding()
@@ -100,22 +98,26 @@ struct WeatherRecordView: View {
     
 }
 
+// modal view for map of current city
 struct ModalView: View {
     @Environment(\.presentationMode) var presentationMode
 
     var region: MKCoordinateRegion
     
     @State private var trackingMode = MapUserTrackingMode.none
+    // the pin for AGH A1 building :)
     @State private var places: [Place] = [
         Place(coordinate: .init(latitude: 50.064528, longitude: 19.923556))
     ]
         
     var body: some View {
         VStack(){
+            // shows map of the current location
             Map(coordinateRegion: .constant(region), annotationItems: places) { place in
                 MapPin(coordinate: place.coordinate)
             }.padding()
-            Button("Cancel") {
+            // allows to close the map with a button (next to collapsing by swiping a finger)
+            Button("Close") {
                 presentationMode.wrappedValue.dismiss()
             }.padding()
         }

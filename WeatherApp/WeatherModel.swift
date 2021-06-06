@@ -13,6 +13,7 @@ struct WeatherModel {
     
     init() {
         records = Array<WeatherRecord>()
+        records.append(WeatherRecord(cityName:""));
     }
     
     // weather record info
@@ -30,17 +31,18 @@ struct WeatherModel {
         var windDirection: Float = Float.random(in: 0 ..< 360)
     }
     
-    // selects the appropiate parameter and makes a random change on it
-    mutating func refresh(record: WeatherRecord, currParam: String, data: WeatherApiResponse) {
+    // refreshes all the paremetres
+    mutating func refresh(record: WeatherRecord, data: WeatherApiResponse, locality: String? = "") {
         let index = records.firstIndex{$0.id == record.id}
         let arr = data.lattLong.components(separatedBy: ",")
+        let cityNameLocality = locality == "" ? data.title : ((locality ?? "") + " (\(data.title))")
         
         records[index!].woeId = data.woeid;
-        records[index!].cityName = data.title;
+        records[index!].cityName = cityNameLocality;
         records[index!].latitude = CLLocationDegrees(arr[0]) ?? 0;
         records[index!].longitude = CLLocationDegrees(arr[1]) ?? 0;
         records[index!].weatherState = data.consolidatedWeather.first?.weatherStateName ?? "Clear";
-        records[index!].temperature = Float(data.consolidatedWeather.first?.theTemp ?? 0) + Float.random(in: 0...3);
+        records[index!].temperature = Float(data.consolidatedWeather.first?.theTemp ?? 0);
         records[index!].humidity = Float(data.consolidatedWeather.first?.humidity ?? 0);
         records[index!].windSpeed = Float(data.consolidatedWeather.first?.windSpeed ?? 0);
         records[index!].windDirection = Float(data.consolidatedWeather.first?.windDirection ?? 0);
@@ -48,8 +50,9 @@ struct WeatherModel {
     
     mutating func addRecord(data: WeatherApiResponse, idx: Int, locality: String? = "") {
         let arr = data.lattLong.components(separatedBy: ",")
-        let cityNameLocality = locality == "" ? data.title : data.title + " (\(locality ?? ""))"
+        let cityNameLocality = locality == "" ? data.title : ((locality ?? "") + " (\(data.title))")
         let i = idx == 1 ? self.records.endIndex : 0
+        
         records.insert(WeatherRecord(
                         woeId: data.woeid,
                         cityName: cityNameLocality,
