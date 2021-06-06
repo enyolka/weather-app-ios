@@ -2,11 +2,12 @@
 //  WeatherApiResponse.swift
 //  WeatherApp
 //
-//  Created by Użytkownik Gość on 27/05/2021.
+//  Created by Emilia Mączka on 27/05/2021.
 //
 
 import Foundation
 
+// returns response for given place id
 // MARK: - WeatherApiResponse
 struct WeatherApiResponse: Codable {
     let consolidatedWeather: [ConsolidatedWeather]

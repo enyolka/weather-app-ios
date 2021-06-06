@@ -2,12 +2,13 @@
 //  CityApiFetcher.swift
 //  WeatherApp
 //
-//  Created by Użytkownik Gość on 29/05/2021.
+//  Created by Użytkownik Emilia Mączka on 29/05/2021.
 //
 
 import Foundation
 import Combine
 
+// fetches city info for given city name
 class CityApiFetcher {
     
     func forecast(forName cityName: String) -> AnyPublisher<CityApiResponse, Error> {

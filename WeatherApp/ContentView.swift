@@ -30,7 +30,7 @@ struct ContentView: View {
     }
 }
 
-// view of each single city
+// view of each single city record
 struct WeatherRecordView: View {
     
     var record: WeatherModel.WeatherRecord
@@ -88,7 +88,7 @@ struct WeatherRecordView: View {
                     }
                 .frame(alignment: .trailing).padding()
                 }})
-        // sets the dimension of object
+        // sets dimensions of object
         }.frame(minWidth: min_width,
                 maxWidth: .infinity,
                 idealHeight: height,

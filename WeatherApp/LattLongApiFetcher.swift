@@ -2,12 +2,13 @@
 //  LattLongApiFetcher.swift
 //  WeatherApp
 //
-//  Created by Użytkownik Gość on 31/05/2021.
+//  Created by Emilia Mączka on 31/05/2021.
 //
 
 import Foundation
 import Combine
 
+// fetches city info for given latitude and longitude
 class LattLongApiFetcher {
     
     func forecast(forLat lat: Double, forLong long: Double) -> AnyPublisher<CityApiResponse, Error> {

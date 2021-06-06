@@ -12,6 +12,7 @@ import MapKit
 
 class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
     
+	// fixed list of cities
     private var citiesList = ["Barcelona", "Paris", "London", "Moscow", "Prague", "Rome", "Washington"]
     @Published var woeId: Int = 0
     @Published var message: String = "(user message)"
@@ -26,17 +27,19 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
     
     @Published private(set) var model: WeatherModel = WeatherModel()
    
-    override init() {
+    override init() { 
         fetcher = WeatherApiFetcher()
         fetcherLattLong = LattLongApiFetcher()
         fetcherCity = CityApiFetcher()
         locationManager = CLLocationManager()
         super.init()
         
+		// location settings 
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
         
+		// itaretes over the cities list and fetches weather data
         citiesList.forEach{fetchCity(forName: $0)}
         
        /* $woeId
@@ -49,7 +52,7 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
         model.records
     }
 
-
+	// sets the location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last
         let geocoder = CLGeocoder()
@@ -68,6 +71,7 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
         }
     }
     
+	// fetches info about city from api with given latitude and longitude
     func fetchLattLong(lat: Double, lon: Double, locality: String){
         fetcherLattLong.forecast(forLat: lat, forLong: lon)
             .sink(receiveCompletion: { completion in
@@ -78,20 +82,24 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
             .store(in: &cancellables)
     }
     
+	// fetches weather data from api
     func fetchWeather(forId woeId: Int, locality: String? = nil) {
         fetcher.forecast(forId: woeId)
             .sink(receiveCompletion: { completion in
                 print(completion)
             }, receiveValue: { value in
                 if (locality != nil) {
+					// refresh first record (set permanently as a record for the current location)
                     self.model.refresh(record: self.records[0], data: value, locality: locality);
                 } else {
+					// add new record filled with returned data
                     self.model.addRecord(data: value);
                 }
             })
             .store(in: &cancellables)
     }
     
+	// fetches info about city from api with given city name 
     func fetchCity(forName cityName: String) {
         fetcherCity.forecast(forName: cityName)
             .sink(receiveCompletion: { completion in
@@ -102,6 +110,7 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
             .store(in: &cancellables)
     }
     
+	// refresh record 
     func refresh(record: WeatherModel.WeatherRecord, woeId: Int) {
         fetcher.forecast(forId: woeId)
             .sink(receiveCompletion: { completion in

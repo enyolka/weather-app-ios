@@ -2,11 +2,12 @@
 //  CityApiResponse.swift
 //  WeatherApp
 //
-//  Created by Użytkownik Gość on 29/05/2021.
+//  Created by Użytkownik Emilia Mączka on 29/05/2021.
 //
 
 import Foundation
 
+// returns response for given city name or latitude and longitude
 // MARK: - CityApiResponseElement
 struct CityApiResponseElement: Codable {
     let title, locationType: String

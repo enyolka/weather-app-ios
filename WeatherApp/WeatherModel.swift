@@ -11,14 +11,13 @@ import MapKit
 struct WeatherModel {
     var records: Array<WeatherRecord> = []
     
-    // creates record for current location
+    // creates all records and first record for current location
     init() {
         records = Array<WeatherRecord>()
-        records.append(WeatherRecord(cityName:"Neverland"));
+        records.append(WeatherRecord(cityName: "(loading...)"));
     }
     
-    // weather record info
-    // default random values
+    // weather record info - default random values
     struct WeatherRecord: Identifiable {
         var id: UUID = UUID()
         var woeId: Int = [44418, 615702, 523920].randomElement()!
