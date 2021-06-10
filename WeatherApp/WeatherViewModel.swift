@@ -40,10 +40,6 @@ class WeatherViewModel : NSObject, ObservableObject, CLLocationManagerDelegate{
 		// itaretes over the cities list and fetches weather data
         citiesList.forEach{fetchCity(forName: $0)}
         
-       /* $woeId
-            .debounce(for: 0.5, scheduler: RunLoop.main)
-            .sink(receiveValue: fetchWeather(forId:))
-            .store(in: &cancellables)*/
     }
 
     var records: Array<WeatherModel.WeatherRecord> {

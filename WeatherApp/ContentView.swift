@@ -68,7 +68,9 @@ struct WeatherRecordView: View {
                 
                 // each click increses the counter, its value defines which parameter will be displayed
                 VStack(alignment: .leading){
+                    
                     Text(record.locality == "" ? record.cityName : ((record.locality) + " (\(record.cityName))"))
+                    
                     switch params[current % params.count] {
                     case "humidity":
                         Text("Humidity: \(record.humidity, specifier: "%.1f")%").font(.caption)
@@ -76,10 +78,13 @@ struct WeatherRecordView: View {
                         Text("Wind: \(record.windSpeed, specifier: "%.1f") m/s").font(.caption)                  default:
                         Text("Temperature: \(record.temperature, specifier: "%.1f")°C").font(.caption)
                     }
+                    
                 }.onTapGesture{
                     current += 1
                 }
+                    
                 Spacer()
+                    
                     VStack(){
                         // clicking on the button shows the map
                         Text("🗺").onTapGesture {
@@ -88,6 +93,7 @@ struct WeatherRecordView: View {
                         .sheet(isPresented: $showModal) {
                             ModalView(region: viewModel.getRegion(record: record))
                         }
+                        
                         // each tap refreshes value of current parameter
                         Text("🔄").onTapGesture {
                             viewModel.refresh( record: record, woeId: record.woeId)
@@ -119,7 +125,7 @@ struct ModalView: View {
         
     var body: some View {
         VStack(){
-            // shows map of the current location
+            // shows map of the current location and sets pin at AGH A1 
             Map(coordinateRegion: .constant(region), annotationItems: places) { place in
                 MapPin(coordinate: place.coordinate)
             }.padding()

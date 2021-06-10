@@ -14,36 +14,41 @@ struct WeatherDetail: View {
     
     var body: some View {
         VStack {
+            
+            // shows map for current city
             MapView(region: viewModel.getRegion(record: record))
                 .ignoresSafeArea(edges: .top)
-                .frame(height: 150)
+                .frame(height: 140)
             
-            
+                // main information display
                 VStack(alignment: .center){
                     Text(record.cityName)
                         .font(.largeTitle)
-                        .padding()
+                        .padding(.horizontal, 16.0)
+                        .padding(.vertical, 8.0)
                         .background(Color.white)
-                        .cornerRadius(25)
+                        .cornerRadius(20)
                         .offset(y: -30)
                         .padding(.bottom, -130)
                     
                     Text(viewModel.getWeatherIcon(record: record))
                         .font(.title)
                         .padding(.top)
+                    
                     Text(record.weatherState)
                 }
-            
-            Divider()
-            
-            HStack(){
+
+            // weather info
             VStack(alignment: .center) {
+                
+                Divider()
 
                 Text("Temperature: \(record.temperature, specifier: "%.1f")°C")
                 Text("Min: \(record.minTemperature, specifier: "%.1f")°C | Max: \(record.maxTemperature, specifier: "%.1f")°C")
                     .font(.subheadline)
                 
                 Divider()
+                
                 Text("Air pressure: \(record.airPressure, specifier: "%.1f") hPa")
                 
                 Divider()
@@ -51,33 +56,12 @@ struct WeatherDetail: View {
                 Text("Humidity: \(record.humidity, specifier: "%.1f") %")
                 
                 Divider()
+                
                     Text("Wind speed: \(record.windSpeed, specifier: "%.1f") km/h")
                     Text("Wind direction: \(record.windDirectionStr) ( \(record.windDirection, specifier: "%.1f")°C)")
                     
             }
             .padding()
-                
-//                VStack(alignment: .trailing) {
-//
-//                    Divider()
-//
-//                    Text("Temperature: \(record.temperature, specifier: "%.1f")°C")
-//                    Text("Min: \(record.minTemperature, specifier: "%.1f")°C | Max: \(record.maxTemperature, specifier: "%.1f")°C")
-//                        .font(.subheadline)
-//
-//                    Divider()
-//                    Text("Air pressure: \(record.airPressure, specifier: "%.1f") hPa")
-//
-//                    Divider()
-//
-//                    Text("Humidity: \(record.humidity, specifier: "%.1f") %")
-//
-//                    Divider()
-//                        Text("Wind speed: \(record.windSpeed, specifier: "%.1f") km/h")
-//                        Text("Wind direction: \(record.windDirectionStr) ( \(record.windDirection, specifier: "%.1f")°C)")
-//
-//                }
-            }
             
             Spacer()
         }
