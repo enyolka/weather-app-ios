@@ -22,7 +22,7 @@ struct WeatherDetail: View {
                 VStack(alignment: .center){
                     Text(record.cityName)
                         .font(.largeTitle)
-                        .offset(y: -20)
+                        .offset(y: -30)
                         .padding(.bottom, -130)
                         .multilineTextAlignment(.center)
                     Text(viewModel.getWeatherIcon(record: record))

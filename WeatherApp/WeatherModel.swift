@@ -30,6 +30,10 @@ struct WeatherModel {
         var humidity: Float = Float.random(in: 0 ... 100)
         var windSpeed: Float = Float.random(in: 0 ... 20)
         var windDirection: Float = Float.random(in: 0 ..< 360)
+        var windDirectionStr: String = ""
+        var airPressure: Float = Float.random(in: 1000 ... 1030)
+        var minTemperature: Float = Float.random(in: -10.0 ... 30.0)
+        var maxTemperature: Float = Float.random(in: -10.0 ... 30.0)
     }
     
     // refreshes all the paremetres
@@ -47,6 +51,10 @@ struct WeatherModel {
         records[index!].humidity = Float(data.consolidatedWeather.first?.humidity ?? 0);
         records[index!].windSpeed = Float(data.consolidatedWeather.first?.windSpeed ?? 0);
         records[index!].windDirection = Float(data.consolidatedWeather.first?.windDirection ?? 0);
+        records[index!].windDirectionStr = data.consolidatedWeather.first?.windDirectionCompass ?? "";
+        records[index!].airPressure = Float(data.consolidatedWeather.first?.airPressure ?? 1000);
+        records[index!].minTemperature = Float(data.consolidatedWeather.first?.minTemp ?? 0);
+        records[index!].maxTemperature = Float(data.consolidatedWeather.first?.maxTemp ?? 0);
     }
     
     // add new record to the list
@@ -62,7 +70,11 @@ struct WeatherModel {
             temperature: Float(data.consolidatedWeather.first?.theTemp ?? 0),
             humidity: Float(data.consolidatedWeather.first?.humidity ?? 0),
             windSpeed: Float(data.consolidatedWeather.first?.windSpeed ?? 0),
-            windDirection: Float(data.consolidatedWeather.first?.windDirection ?? 0)
+            windDirection: Float(data.consolidatedWeather.first?.windDirection ?? 0),
+            windDirectionStr: data.consolidatedWeather.first?.windDirectionCompass ?? "",
+            airPressure: Float(data.consolidatedWeather.first?.airPressure ?? 1000),
+            minTemperature: Float(data.consolidatedWeather.first?.minTemp ?? 0),
+            maxTemperature: Float(data.consolidatedWeather.first?.maxTemp ?? 0)
         ))
         
     }
