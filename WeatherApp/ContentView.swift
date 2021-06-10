@@ -29,7 +29,7 @@ struct ContentView: View {
 //        }
         NavigationView {
             List(viewModel.records) { record in
-                NavigationLink( destination: WeatherDetail()){
+                NavigationLink( destination: WeatherDetail(record: record, viewModel: viewModel)){
                     WeatherRecordView(record: record, viewModel: viewModel)}
             }
             .navigationTitle("Weather")
