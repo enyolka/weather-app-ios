@@ -32,7 +32,7 @@ struct ContentView: View {
                 NavigationLink( destination: WeatherDetail(record: record, viewModel: viewModel)){
                     WeatherRecordView(record: record, viewModel: viewModel)}
             }
-            .navigationTitle("Weather")
+            .navigationTitle("Weather App")
         }
     }
 }
@@ -82,7 +82,7 @@ struct WeatherRecordView: View {
                 Spacer()
                     VStack(){
                         // clicking on the button shows the map
-                        Button("🗺") {
+                        Text("🗺").onTapGesture {
                             showModal = true
                         }
                         .sheet(isPresented: $showModal) {
