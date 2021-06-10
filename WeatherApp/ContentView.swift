@@ -20,12 +20,19 @@ struct ContentView: View {
     
     // creates scrolled view of all cities
     var body: some View {
-        ScrollView(.vertical){
-            VStack {
-                ForEach(viewModel.records){record in
-                    WeatherRecordView(record: record, viewModel: viewModel)
-                }.padding(.top, 4)
-            }.padding()
+//        ScrollView(.vertical){
+//            VStack {
+//                ForEach(viewModel.records){record in
+//                    WeatherRecordView(record: record, viewModel: viewModel)
+//                }.padding(.top, 4)
+//            }.padding()
+//        }
+        NavigationView {
+            List(viewModel.records) { record in
+                NavigationLink( destination: WeatherDetail()){
+                    WeatherRecordView(record: record, viewModel: viewModel)}
+            }
+            .navigationTitle("Weather")
         }
     }
 }
@@ -52,7 +59,7 @@ struct WeatherRecordView: View {
     var body: some View {
         ZStack{
             // border for entire object
-            RoundedRectangle(cornerRadius: cornerRadius).stroke()
+            
             GeometryReader(content: { geometry in
                 HStack{
                 // inserts the appropriate icon for the record, sets dimensions
